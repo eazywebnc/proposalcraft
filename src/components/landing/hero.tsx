@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image";
 
 import { useRef } from 'react'
 import Link from 'next/link'
@@ -221,6 +222,22 @@ export function Hero() {
           {/* Glow effect */}
           <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/5 via-violet-500/5 to-purple-500/5 rounded-3xl blur-xl -z-10" />
         </motion.div>
+
+        {/* Dashboard Preview */}
+        <div className="mt-20 max-w-5xl mx-auto px-4">
+          <div className="relative rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-violet-500/10">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
+            <Image
+              src="/images/dashboard.webp"
+              alt="ProposalCraft proposal builder dashboard"
+              width={1200}
+              height={800}
+              className="w-full h-auto"
+              priority
+            />
+            <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 z-20" />
+          </div>
+        </div>
       </div>
     </section>
   )
