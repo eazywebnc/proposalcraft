@@ -36,7 +36,7 @@ export function Hero() {
           className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
         >
           <span className="text-foreground">Win more clients with</span>
-          <br />
+          {' '}<br />
           <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
             stunning proposals
           </span>
