@@ -1,10 +1,19 @@
 'use client'
 
+import { useRef } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Sparkles, Star, Zap, Clock } from 'lucide-react'
 
 export function Hero() {
+  const mockupRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: mockupRef,
+    offset: ['start end', 'end start'],
+  })
+  const mockupY = useTransform(scrollYProgress, [0, 1], [0, -60])
+  const mockupRotateX = useTransform(scrollYProgress, [0, 0.5, 1], [5, 0, -3])
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Background effects */}
@@ -97,51 +106,116 @@ export function Hero() {
           ))}
         </motion.div>
 
-        {/* Floating proposal mockup */}
+        {/* Floating proposal mockup with scroll parallax */}
         <motion.div
+          ref={mockupRef}
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
+          style={{ y: mockupY, rotateX: mockupRotateX, perspective: 1200 }}
           className="mt-20 relative"
         >
           <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-card/50 backdrop-blur-sm shadow-2xl shadow-black/20 overflow-hidden">
             {/* Browser chrome */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10">
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-black/20">
               <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-500/60" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                <div className="w-3 h-3 rounded-full bg-green-500/60" />
+                <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                <div className="w-3 h-3 rounded-full bg-green-500/80" />
               </div>
               <div className="flex-1 mx-4">
-                <div className="h-6 rounded-md bg-white/5 max-w-sm mx-auto flex items-center justify-center text-xs text-muted-foreground">
-                  proposalcraft.eazyweb.nc/p/your-proposal
+                <div className="h-6 rounded-md bg-white/5 max-w-sm mx-auto flex items-center justify-center text-xs text-muted-foreground font-mono gap-2">
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  proposalcraft.eazyweb.nc/p/acme-redesign
                 </div>
               </div>
             </div>
-            {/* Mockup content */}
-            <div className="p-8 space-y-6">
+            {/* Detailed mockup content */}
+            <div className="p-6 md:p-8 space-y-5">
+              {/* Header */}
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="h-8 w-64 rounded bg-gradient-to-r from-indigo-500/20 to-violet-500/20 animate-shimmer mb-3" />
-                  <div className="h-4 w-48 rounded bg-white/5" />
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.0 }}
+                    className="text-lg md:text-xl font-bold text-foreground"
+                  >
+                    Website Redesign Proposal
+                  </motion.p>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.1 }}
+                    className="text-sm text-muted-foreground"
+                  >
+                    Prepared for Acme Corp — April 2026
+                  </motion.p>
                 </div>
-                <div className="px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium">
-                  Sent
-                </div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1.2 }}
+                  className="px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20"
+                >
+                  Accepted
+                </motion.div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="p-4 rounded-xl border border-white/5 bg-white/[2%] space-y-2">
-                    <div className="h-3 w-20 rounded bg-white/10" />
-                    <div className="h-2 w-full rounded bg-white/5" />
-                    <div className="h-2 w-3/4 rounded bg-white/5" />
-                  </div>
+
+              {/* Summary cards */}
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { label: 'Project Value', value: '$12,500', color: 'text-indigo-400' },
+                  { label: 'Timeline', value: '6 weeks', color: 'text-violet-400' },
+                  { label: 'Start Date', value: 'Apr 14', color: 'text-purple-400' },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.3 + i * 0.1 }}
+                    className="p-3 rounded-xl border border-white/5 bg-white/[2%]"
+                  >
+                    <p className="text-[10px] text-muted-foreground mb-1">{item.label}</p>
+                    <p className={`text-lg font-bold ${item.color}`}>{item.value}</p>
+                  </motion.div>
                 ))}
               </div>
-              <div className="flex items-center gap-3">
-                <div className="h-10 flex-1 rounded-xl bg-gradient-to-r from-indigo-500/20 to-violet-500/20" />
-                <div className="h-10 w-32 rounded-xl bg-emerald-500/20" />
-              </div>
+
+              {/* Scope section */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.6 }}
+                className="space-y-2"
+              >
+                <p className="text-xs font-semibold text-foreground/80">Scope of Work</p>
+                <div className="space-y-1.5">
+                  {['UX audit & wireframes', 'Visual design (3 concepts)', 'Frontend development', 'CMS integration & testing'].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <div className="w-4 h-4 rounded-full bg-indigo-500/20 flex items-center justify-center">
+                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                      </div>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* CTA row */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.8 }}
+                className="flex items-center gap-3"
+              >
+                <div className="h-10 flex-1 rounded-xl bg-gradient-to-r from-indigo-500/30 to-violet-500/30 flex items-center justify-center text-xs text-indigo-300 font-medium">
+                  Download PDF
+                </div>
+                <div className="h-10 w-36 rounded-xl bg-gradient-to-r from-emerald-500/30 to-teal-500/30 flex items-center justify-center text-xs text-emerald-300 font-medium">
+                  Pay $12,500
+                </div>
+              </motion.div>
             </div>
           </div>
           {/* Glow effect */}
