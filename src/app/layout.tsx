@@ -19,7 +19,14 @@ export const metadata: Metadata = {
     'freelancer proposal',
     'AI proposal writer',
     'professional proposal maker',
+    'AI proposal generator',
+    'freelancer proposal tool',
+    'proposal tracking',
+    'business proposal template',
+    'proposal software',
   ],
+  authors: [{ name: 'EazyWebNC', url: 'https://eazyweb.nc' }],
+  robots: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   metadataBase: new URL('https://proposalcraft.eazyweb.nc'),
   alternates: {
     canonical: '/',
@@ -44,13 +51,32 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
+      '@type': 'WebSite',
+      name: 'ProposalCraft',
+      url: 'https://proposalcraft.eazyweb.nc',
+      publisher: {
+        '@type': 'Organization',
+        name: 'EazyWebNC',
+        url: 'https://eazyweb.nc',
+        logo: { '@type': 'ImageObject', url: 'https://eazyweb.nc/logo.png' },
+        sameAs: [
+          'https://www.facebook.com/eazywebnc',
+          'https://www.linkedin.com/company/eazywebnc',
+          'https://x.com/eazywebnc',
+        ],
+      },
+    },
+    {
       '@type': 'SoftwareApplication',
       name: 'ProposalCraft',
       applicationCategory: 'BusinessApplication',
+      applicationSubCategory: 'Proposal Management',
       operatingSystem: 'Web',
       url: 'https://proposalcraft.eazyweb.nc',
       description:
         'Create stunning, professional proposals in minutes with AI. Answer a few questions, pick a template, and close deals faster.',
+      featureList:
+        'AI proposal generation, Professional templates, Proposal tracking, Client portal, PDF export, Analytics dashboard',
       offers: {
         '@type': 'AggregateOffer',
         lowPrice: '0',
