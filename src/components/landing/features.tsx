@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
+import Image from 'next/image'
 import {
   Sparkles,
   FileText,
@@ -148,6 +149,7 @@ const features = [
     glow: 'bg-emerald-500/20',
     span: 'md:col-span-2',
     visual: 'ai',
+    image: '/images/feature-1.webp',
   },
   {
     icon: FileText,
@@ -175,6 +177,7 @@ const features = [
     glow: 'bg-amber-500/20',
     span: 'md:col-span-2',
     visual: 'payment',
+    image: '/images/feature-2.webp',
   },
   {
     icon: BarChart3,
@@ -257,6 +260,24 @@ export function Features() {
               {feature.visual === 'payment' && <PaymentVisual />}
               {feature.visual === 'analytics' && <AnalyticsVisual />}
               {feature.visual === 'sharing' && <SharingVisual />}
+
+              {'image' in feature && feature.image && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="mt-4 rounded-xl overflow-hidden border border-white/10 shadow-lg shadow-black/20"
+                >
+                  <Image
+                    src={feature.image}
+                    alt={feature.title}
+                    width={800}
+                    height={600}
+                    className="w-full h-auto"
+                  />
+                </motion.div>
+              )}
 
               <div
                 className={cn(

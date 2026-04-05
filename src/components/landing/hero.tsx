@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Sparkles, Star, Zap, Clock, Check, FileSignature } from 'lucide-react'
 import gsap from 'gsap'
@@ -311,14 +312,26 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Right — Interactive mockup */}
+        {/* Right — Dashboard preview */}
         <motion.div
           ref={mockupRef}
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
+          className="relative"
         >
-          <ProposalBuilderMockup />
+          {/* Glow behind */}
+          <div className="absolute -inset-6 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-amber-500/10 rounded-3xl blur-2xl" />
+          <div className="relative rounded-2xl border border-emerald-500/20 overflow-hidden shadow-2xl shadow-emerald-500/10">
+            <Image
+              src="/images/dashboard.webp"
+              alt="ProposalCraft dashboard showing proposal management interface"
+              width={1200}
+              height={800}
+              className="w-full h-auto"
+              priority
+            />
+          </div>
         </motion.div>
       </div>
     </section>
