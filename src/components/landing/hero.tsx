@@ -1,19 +1,138 @@
 'use client'
 import Image from "next/image";
 
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Sparkles, Star, Zap, Clock } from 'lucide-react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export function Hero() {
   const mockupRef = useRef<HTMLDivElement>(null)
+  const textSectionRef = useRef<HTMLDivElement>(null)
+  const statsRef = useRef<HTMLDivElement>(null)
+  const dashboardRef = useRef<HTMLDivElement>(null)
+
   const { scrollYProgress } = useScroll({
     target: mockupRef,
     offset: ['start end', 'end start'],
   })
   const mockupY = useTransform(scrollYProgress, [0, 1], [0, -60])
   const mockupRotateX = useTransform(scrollYProgress, [0, 0.5, 1], [5, 0, -3])
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // 3D perspective tilt on the mockup card driven by scroll
+      if (mockupRef.current) {
+        gsap.set(mockupRef.current, { transformPerspective: 1200 })
+
+        gsap.to(mockupRef.current, {
+          rotateY: 8,
+          rotateX: -4,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: mockupRef.current,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            scrub: 1,
+          },
+        })
+
+        // Return tilt back on continued scroll
+        gsap.fromTo(
+          mockupRef.current,
+          { rotateY: 8, rotateX: -4 },
+          {
+            rotateY: -3,
+            rotateX: 2,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: mockupRef.current,
+              start: 'center center',
+              end: 'bottom top',
+              scrub: 1,
+            },
+          }
+        )
+      }
+
+      // Stats cards: scale up with stagger when entering viewport
+      if (statsRef.current) {
+        const statItems = statsRef.current.querySelectorAll('[data-stat-card]')
+        if (statItems.length) {
+          gsap.fromTo(
+            statItems,
+            { scale: 0.7, opacity: 0, y: 30 },
+            {
+              scale: 1,
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: 'back.out(1.7)',
+              stagger: 0.15,
+              scrollTrigger: {
+                trigger: statsRef.current,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          )
+        }
+      }
+
+      // Parallax: text section moves slower than mockup
+      if (textSectionRef.current) {
+        gsap.to(textSectionRef.current, {
+          yPercent: -8,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: textSectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.5,
+          },
+        })
+      }
+
+      // Mockup moves faster (stronger parallax)
+      if (mockupRef.current) {
+        gsap.to(mockupRef.current, {
+          yPercent: 15,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: mockupRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.5,
+          },
+        })
+      }
+
+      // Dashboard image: subtle parallax + scale
+      if (dashboardRef.current) {
+        gsap.fromTo(
+          dashboardRef.current,
+          { scale: 0.92, opacity: 0.6 },
+          {
+            scale: 1,
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: dashboardRef.current,
+              start: 'top 90%',
+              end: 'top 40%',
+              scrub: 1,
+            },
+          }
+        )
+      }
+    })
+
+    return () => ctx.revert()
+  }, [])
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
@@ -27,66 +146,70 @@ export function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(oklch(1_0_0_/_3%)_1px,transparent_1px),linear-gradient(90deg,oklch(1_0_0_/_3%)_1px,transparent_1px)] bg-[size:64px_64px]" />
 
       <div className="relative max-w-7xl mx-auto px-6 text-center">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-sm mb-8"
-        >
-          <Sparkles className="w-4 h-4" />
-          AI-powered proposal generation
-        </motion.div>
-
-        {/* Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
-        >
-          <span className="text-foreground">Win more clients with</span>
-          {' '}<br />
-          <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
-            stunning proposals
-          </span>
-        </motion.h1>
-
-        {/* Subheadline */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
-        >
-          Answer 5 questions. Our AI crafts a professional proposal in seconds.
-          Share it, track views, and get paid — all in one place.
-        </motion.p>
-
-        {/* CTA buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
-        >
-          <Link
-            href="/auth/login"
-            className="group px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-600 text-white font-semibold text-lg hover:from-indigo-600 hover:to-violet-700 transition-all shadow-2xl shadow-indigo-500/25 hover:shadow-indigo-500/40 flex items-center gap-2"
+        {/* Text section with parallax offset */}
+        <div ref={textSectionRef}>
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-sm mb-8"
           >
-            Create your first proposal
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <a
-            href="#how-it-works"
-            className="px-8 py-4 rounded-2xl border border-border text-foreground font-medium text-lg hover:bg-accent transition-colors"
+            <Sparkles className="w-4 h-4" />
+            AI-powered proposal generation
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
           >
-            See how it works
-          </a>
-        </motion.div>
+            <span className="text-foreground">Win more clients with</span>
+            {' '}<br />
+            <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
+              stunning proposals
+            </span>
+          </motion.h1>
+
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
+          >
+            Answer 5 questions. Our AI crafts a professional proposal in seconds.
+            Share it, track views, and get paid — all in one place.
+          </motion.p>
+
+          {/* CTA buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+          >
+            <Link
+              href="/auth/login"
+              className="group px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-600 text-white font-semibold text-lg hover:from-indigo-600 hover:to-violet-700 transition-all shadow-2xl shadow-indigo-500/25 hover:shadow-indigo-500/40 flex items-center gap-2"
+            >
+              Create your first proposal
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <a
+              href="#how-it-works"
+              className="px-8 py-4 rounded-2xl border border-border text-foreground font-medium text-lg hover:bg-accent transition-colors"
+            >
+              See how it works
+            </a>
+          </motion.div>
+        </div>
 
         {/* Stats */}
         <motion.div
+          ref={statsRef}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5 }}
@@ -97,7 +220,7 @@ export function Hero() {
             { icon: Star, label: 'Templates', value: '10+' },
             { icon: Clock, label: 'Time Saved', value: '5h/wk' },
           ].map(({ icon: Icon, label, value }) => (
-            <div key={label} className="text-center">
+            <div key={label} data-stat-card className="text-center">
               <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 mb-2">
                 <Icon className="w-5 h-5" />
               </div>
@@ -224,7 +347,7 @@ export function Hero() {
         </motion.div>
 
         {/* Dashboard Preview */}
-        <div className="mt-20 max-w-5xl mx-auto px-4">
+        <div ref={dashboardRef} className="mt-20 max-w-5xl mx-auto px-4">
           <div className="relative rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-violet-500/10">
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
             <Image
