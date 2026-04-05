@@ -26,7 +26,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:shadow-indigo-500/40 transition-shadow">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/25 group-hover:shadow-emerald-500/40 transition-shadow">
             <FileText className="w-4 h-4 text-white" />
           </div>
           <span className="text-lg font-bold text-foreground">{APP_NAME}</span>
@@ -56,7 +56,7 @@ export function Navbar() {
           </Link>
           <Link
             href="/auth/login"
-            className="px-5 py-2.5 text-sm font-medium rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 text-white hover:from-indigo-600 hover:to-violet-700 transition-all shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40"
+            className="px-5 py-2.5 text-sm font-medium rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700 transition-all shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40"
           >
             Get started free
           </Link>
@@ -84,7 +84,7 @@ export function Navbar() {
               <a href="#how-it-works" className="block text-sm text-muted-foreground">How it works</a>
               <a href="#templates" className="block text-sm text-muted-foreground">Templates</a>
               <a href="#pricing" className="block text-sm text-muted-foreground">Pricing</a>
-              <Link href="/auth/login" className="block w-full text-center py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-sm font-medium">
+              <Link href="/auth/login" className="block w-full text-center py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-sm font-medium">
                 Get started free
               </Link>
             </div>

@@ -14,8 +14,8 @@ export function CTA() {
           viewport={{ once: true }}
           className="relative rounded-3xl overflow-hidden"
         >
-          {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700" />
+          {/* Background gradient — emerald/teal */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,oklch(1_0_0_/_15%),transparent_60%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(oklch(1_0_0_/_5%)_1px,transparent_1px),linear-gradient(90deg,oklch(1_0_0_/_5%)_1px,transparent_1px)] bg-[size:32px_32px]" />
 
@@ -30,7 +30,7 @@ export function CTA() {
 
             <Link
               href="/auth/login"
-              className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white text-indigo-600 font-semibold text-lg hover:bg-white/90 transition-colors shadow-2xl"
+              className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white text-emerald-600 font-semibold text-lg hover:bg-white/90 transition-colors shadow-2xl"
             >
               Create your free account
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import {
@@ -31,7 +30,7 @@ function AIGenerationVisual() {
         >
           <div className={cn(
             "w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold",
-            i < 4 ? "bg-indigo-500 text-white" : "bg-white/10 text-white/40"
+            i < 4 ? "bg-emerald-500 text-white" : "bg-white/10 text-white/40"
           )}>
             {i < 4 ? <Check className="w-3 h-3" /> : i + 1}
           </div>
@@ -43,14 +42,14 @@ function AIGenerationVisual() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.8, duration: 0.4 }}
-        className="mt-3 p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-[10px] text-indigo-300 flex items-center gap-2"
+        className="mt-3 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-300 flex items-center gap-2"
       >
         <Sparkles className="w-3 h-3" />
         Generating proposal...
         <motion.div
           animate={{ width: ['0%', '100%'] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="h-1 rounded-full bg-indigo-500/50 flex-1"
+          className="h-1 rounded-full bg-emerald-500/50 flex-1"
         />
       </motion.div>
     </div>
@@ -65,10 +64,10 @@ function PaymentVisual() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.3, duration: 0.4 }}
-        className="flex-1 p-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5"
+        className="flex-1 p-3 rounded-xl border border-amber-500/20 bg-amber-500/5"
       >
         <p className="text-[10px] text-white/40 mb-1">Proposal accepted</p>
-        <p className="text-lg font-black text-emerald-400">$4,500</p>
+        <p className="text-lg font-black text-amber-400">$4,500</p>
         <p className="text-[10px] text-white/30 mt-1">Paid via Stripe</p>
       </motion.div>
       <motion.div
@@ -90,17 +89,28 @@ function PaymentVisual() {
 function AnalyticsVisual() {
   const bars = [40, 65, 45, 80, 60, 90, 75]
   return (
-    <div className="mt-4 flex items-end gap-1.5 h-16">
-      {bars.map((h, i) => (
-        <motion.div
-          key={i}
-          initial={{ height: 0 }}
-          whileInView={{ height: `${h}%` }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 * i + 0.3, duration: 0.5, ease: 'easeOut' }}
-          className="flex-1 rounded-t bg-gradient-to-t from-amber-500/60 to-amber-400/30 min-h-[4px]"
-        />
-      ))}
+    <div className="mt-4">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[9px] text-white/30">Proposals sent this month</span>
+        <span className="text-[10px] font-bold text-teal-400">↑ 34%</span>
+      </div>
+      <div className="flex items-end gap-1.5 h-16">
+        {bars.map((h, i) => (
+          <motion.div
+            key={i}
+            initial={{ height: 0 }}
+            whileInView={{ height: `${h}%` }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 * i + 0.3, duration: 0.5, ease: 'easeOut' }}
+            className={cn(
+              "flex-1 rounded-t min-h-[4px]",
+              i === bars.length - 2
+                ? "bg-gradient-to-t from-emerald-500 to-emerald-400/60"
+                : "bg-gradient-to-t from-emerald-500/40 to-emerald-400/15"
+            )}
+          />
+        ))}
+      </div>
     </div>
   )
 }
@@ -109,8 +119,8 @@ function SharingVisual() {
   return (
     <div className="mt-4 space-y-2">
       {[
-        { icon: Eye, label: 'Client opened proposal', time: '2m ago', color: 'text-pink-400' },
-        { icon: Clock, label: 'Viewed for 4:32', time: '1m ago', color: 'text-rose-400' },
+        { icon: Eye, label: 'Client opened proposal', time: '2m ago', color: 'text-teal-400' },
+        { icon: Clock, label: 'Viewed for 4:32', time: '1m ago', color: 'text-emerald-400' },
       ].map((event, i) => (
         <motion.div
           key={i}
@@ -134,8 +144,8 @@ const features = [
     icon: Sparkles,
     title: 'AI-Powered Generation',
     description: 'Answer 5 simple questions and our AI crafts a complete, professional proposal tailored to your industry.',
-    gradient: 'from-indigo-500 to-blue-500',
-    glow: 'bg-indigo-500/20',
+    gradient: 'from-emerald-500 to-teal-500',
+    glow: 'bg-emerald-500/20',
     span: 'md:col-span-2',
     visual: 'ai',
   },
@@ -143,8 +153,8 @@ const features = [
     icon: FileText,
     title: '10+ Premium Templates',
     description: 'From bold creative to minimalist pro — every template is designed to impress.',
-    gradient: 'from-violet-500 to-purple-500',
-    glow: 'bg-violet-500/20',
+    gradient: 'from-teal-500 to-cyan-500',
+    glow: 'bg-teal-500/20',
     span: 'md:col-span-1',
     visual: null,
   },
@@ -152,8 +162,8 @@ const features = [
     icon: Share2,
     title: 'One-Click Sharing',
     description: 'Send a beautiful link. Know when your client opens it and how long they spend.',
-    gradient: 'from-pink-500 to-rose-500',
-    glow: 'bg-pink-500/20',
+    gradient: 'from-teal-400 to-emerald-500',
+    glow: 'bg-teal-400/20',
     span: 'md:col-span-1',
     visual: 'sharing',
   },
@@ -161,8 +171,8 @@ const features = [
     icon: CreditCard,
     title: 'Accept & Get Paid',
     description: 'Clients accept proposals and pay via Stripe — right from the proposal page. Zero friction.',
-    gradient: 'from-emerald-500 to-teal-500',
-    glow: 'bg-emerald-500/20',
+    gradient: 'from-amber-500 to-yellow-500',
+    glow: 'bg-amber-500/20',
     span: 'md:col-span-2',
     visual: 'payment',
   },
@@ -170,8 +180,8 @@ const features = [
     icon: BarChart3,
     title: 'Analytics Dashboard',
     description: 'Track views, opens, and conversions. Optimize your close rate.',
-    gradient: 'from-amber-500 to-orange-500',
-    glow: 'bg-amber-500/20',
+    gradient: 'from-emerald-500 to-green-500',
+    glow: 'bg-emerald-500/20',
     span: 'md:col-span-1',
     visual: 'analytics',
   },
@@ -179,8 +189,8 @@ const features = [
     icon: Palette,
     title: 'Custom Branding',
     description: 'Add your logo, colors, and company name. Every proposal looks like yours.',
-    gradient: 'from-cyan-500 to-blue-500',
-    glow: 'bg-cyan-500/20',
+    gradient: 'from-amber-400 to-orange-500',
+    glow: 'bg-amber-400/20',
     span: 'md:col-span-1',
     visual: null,
   },
@@ -196,7 +206,7 @@ export function Features() {
 
   return (
     <section ref={ref} id="features" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(0.2_0.08_270),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(0.18_0.06_160),transparent_70%)]" />
 
       <div className="relative max-w-7xl mx-auto px-6">
         <motion.div
@@ -207,7 +217,7 @@ export function Features() {
         >
           <h2 className="text-4xl sm:text-5xl font-bold mb-4">
             Everything you need to{' '}
-            <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
               close deals
             </span>
           </h2>
@@ -243,13 +253,11 @@ export function Features() {
                 {feature.description}
               </p>
 
-              {/* Visual elements */}
               {feature.visual === 'ai' && <AIGenerationVisual />}
               {feature.visual === 'payment' && <PaymentVisual />}
               {feature.visual === 'analytics' && <AnalyticsVisual />}
               {feature.visual === 'sharing' && <SharingVisual />}
 
-              {/* Hover glow */}
               <div
                 className={cn(
                   'absolute -bottom-4 -right-4 w-32 h-32 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-3xl',
@@ -259,40 +267,6 @@ export function Features() {
             </motion.div>
           ))}
         </motion.div>
-
-        {/* Feature Screenshots */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="rounded-2xl border border-white/10 overflow-hidden bg-white/[0.02]"
-          >
-            <Image
-              src="/images/feature-1.webp"
-              alt="AI-powered proposal creation workflow"
-              width={600}
-              height={400}
-              className="w-full h-auto"
-            />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="rounded-2xl border border-white/10 overflow-hidden bg-white/[0.02]"
-          >
-            <Image
-              src="/images/feature-2.webp"
-              alt="Proposal analytics and tracking dashboard"
-              width={600}
-              height={400}
-              className="w-full h-auto"
-            />
-          </motion.div>
-        </div>
       </div>
     </section>
   )

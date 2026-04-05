@@ -17,7 +17,7 @@ export function Pricing() {
         >
           <h2 className="text-4xl sm:text-5xl font-bold mb-4">
             Simple,{' '}
-            <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
               transparent pricing
             </span>
           </h2>
@@ -36,12 +36,12 @@ export function Pricing() {
               transition={{ delay: i * 0.1 }}
               className={`relative rounded-2xl p-8 transition-all duration-300 ${
                 plan.is_popular
-                  ? 'border-2 border-indigo-500/50 bg-gradient-to-b from-indigo-500/10 to-transparent shadow-xl shadow-indigo-500/10 scale-[1.02]'
+                  ? 'border-2 border-emerald-500/50 bg-gradient-to-b from-emerald-500/10 to-transparent shadow-xl shadow-emerald-500/10 scale-[1.02]'
                   : 'border border-white/10 bg-white/[2%] hover:bg-white/[3%]'
               }`}
             >
               {plan.is_popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-xs font-semibold">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xs font-semibold">
                   Most popular
                 </div>
               )}
@@ -62,7 +62,7 @@ export function Pricing() {
                 href="/auth/login"
                 className={`block w-full text-center py-3 rounded-xl font-medium text-sm transition-all mb-8 ${
                   plan.is_popular
-                    ? 'bg-gradient-to-r from-indigo-500 to-violet-600 text-white hover:from-indigo-600 hover:to-violet-700 shadow-lg shadow-indigo-500/25'
+                    ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700 shadow-lg shadow-emerald-500/25'
                     : 'border border-border text-foreground hover:bg-accent'
                 }`}
               >
@@ -72,7 +72,7 @@ export function Pricing() {
               <ul className="space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm">
-                    <Check className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                     <span className="text-muted-foreground">{feature}</span>
                   </li>
                 ))}
