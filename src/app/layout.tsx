@@ -9,7 +9,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'ProposalCraft — AI-Powered Business Proposals for Freelancers',
+  title: 'ProposalCraft — AI-Powered Proposals for Freelancers',
   description:
     'Create stunning, professional proposals in minutes with AI. Answer a few questions, pick a template, and close deals faster. Free to start.',
   keywords: [
